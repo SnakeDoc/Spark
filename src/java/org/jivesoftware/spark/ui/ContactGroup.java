@@ -345,14 +345,14 @@ public class ContactGroup extends CollapsiblePane implements MouseListener {
         int index = tempItems.indexOf(item);
 
 
-        Object[] objs = contactItemList.getSelectedValues();
+        List<ContactItem> values = contactItemList.getSelectedValuesList();
 
         model.insertElementAt(item, index);
 
-        int[] intList = new int[objs.length];
-        for (int i = 0; i < objs.length; i++) {
-            ContactItem contact = (ContactItem)objs[i];
-            intList[i] = model.indexOf(contact);
+        int size = values.size();
+        int[] intList = new int[size];
+        for (int i = 0; i < size; i++) {
+            intList[i] = model.indexOf(values.get(i));
         }
 
         if (intList.length > 0) {
@@ -867,12 +867,11 @@ public class ContactGroup extends CollapsiblePane implements MouseListener {
      */
     public List<ContactItem> getSelectedContacts() {
         final List<ContactItem> items = new ArrayList<ContactItem>();
-        Object[] selections = contactItemList.getSelectedValues();
-        final int no = selections != null ? selections.length : 0;
+        List<ContactItem> selections = contactItemList.getSelectedValuesList();
+        final int no = selections != null ? selections.size() : 0;
         for (int i = 0; i < no; i++) {
             try {
-                ContactItem item = (ContactItem)selections[i];
-                items.add(item);
+                items.add(selections.get(i));
             }
             catch (NullPointerException e) {
                 // TODO: Evaluate if we should do something here.

@@ -356,11 +356,11 @@ final class InvitationDialog extends JPanel {
                     catch (ChatNotFoundException e1) {
                         dlg.setVisible(false);
                         final List<String> jidList = new ArrayList<String>();
-                        Object[] jids = invitedUserList.getSelectedValues();
-                        final int no = jids != null ? jids.length : 0;
+                        List<String> jids = invitedUserList.getSelectedValuesList();
+                        final int no = jids != null ? jids.size() : 0;
                         for (int i = 0; i < no; i++) {
                             try {
-                                jidList.add((String)jids[i]);
+                                jidList.add(jids.get(i));
                             }
                             catch (NullPointerException ee) {
                                 Log.error(ee);
@@ -403,10 +403,10 @@ final class InvitationDialog extends JPanel {
                     pane.setValue(JOptionPane.UNINITIALIZED_VALUE);
                     dlg.dispose();
 
-                    Object[] values = invitedUserList.getSelectedValues();
-                    final int no = values != null ? values.length : 0;
+                    List<String> values = invitedUserList.getSelectedValuesList();
+                    final int no = values != null ? values.size() : 0;
                     for (int i = 0; i < no; i++) {
-                        String jid = (String)values[i];
+                        String jid = values.get(i);
                         chatRoom.getMultiUserChat().invite(jid, message != null ? message : Res.getString("message.please.join.in.conference"));
                         String nickname = SparkManager.getUserManager().getUserNicknameFromJID(jid);
                         chatRoom.getTranscriptWindow().insertNotificationMessage("Invited " + nickname, ChatManager.NOTIFICATION_COLOR);

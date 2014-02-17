@@ -232,11 +232,10 @@ public class PrivacyAddDialogUI extends JPanel {
 
 
 
-        Object[] values = rosterList.getSelectedValues();
-        final int no = values != null ? values.length : 0;
+        List<ContactItem> values = rosterList.getSelectedValuesList();
+        final int no = values != null ? values.size() : 0;
         for (int i = 0; i < no; i++) {
             try {
-                ContactItem item = (ContactItem) values[i];
 
                 PrivacyItem.Type type = _showGroups ? PrivacyItem.Type.group : PrivacyItem.Type.jid;
                 PrivacyItem pitem = new PrivacyItem(type.name(), false, 999);
@@ -244,7 +243,7 @@ public class PrivacyAddDialogUI extends JPanel {
                 pitem.setFilterMessage(_blockMsg.isSelected());
                 pitem.setFilterPresence_in(_blockPIn.isSelected());
                 pitem.setFilterPresence_out(_blockPOout.isSelected());
-                pitem.setValue(item.getJID());
+                pitem.setValue(values.get(i).getJID());
 
                 selectedContacts.add(pitem);
             } catch (NullPointerException e) {
