@@ -94,11 +94,21 @@ public class ConferenceServices implements InvitationListener {
 
             addPopupListeners();
 
+            // schedule a conference
+            final JMenu actionsMenu = SparkManager.getMainWindow().getMenuByName(Res.getString("menuitem.actions"));
+            JMenuItem schedulerActionMenuItem = new JMenuItem(/*Res.getString("message.join.conference.room")*/"Schedule a conference", SparkRes.getImageIcon(SparkRes.CONFERENCE_IMAGE_16x16));
+            actionsMenu.add(schedulerActionMenuItem, 1);
+            schedulerActionMenuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    scheduleConference(new ArrayList<ContactItem>());
+                }
+            });
+
             // Add Join Conference Button to ActionMenu
 
-              final JMenu actionsMenu = SparkManager.getMainWindow().getMenuByName(Res.getString("menuitem.actions"));
+              //final JMenu actionsMenu = SparkManager.getMainWindow().getMenuByName(Res.getString("menuitem.actions"));
             JMenuItem actionMenuItem = new JMenuItem(Res.getString("message.join.conference.room"), SparkRes.getImageIcon(SparkRes.CONFERENCE_IMAGE_16x16));
-            actionsMenu.add(actionMenuItem,1);
+            actionsMenu.add(actionMenuItem,2);
             actionMenuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ConferenceRoomBrowser rooms = new ConferenceRoomBrowser(bookmarksUI, getDefaultServiceName());
@@ -289,6 +299,27 @@ public class ConferenceServices implements InvitationListener {
         actionsMenu.add(conferenceAction);
     }
 
+    private void scheduleConference(Collection<ContactItem> items) {
+        final ContactList contactList = SparkManager.getWorkspace().getContactList();
+        List<String> jids = new ArrayList<String>();
+        for (ContactItem item : items) {
+            ContactGroup contactGroup = contactList.getContactGroup(item.getGroupName());
+            contactGroup.clearSelection();
+
+            if (item.isAvailable()) {
+                jids.add(item.getJID());
+            }
+        }
+
+        String userName = StringUtils.parseName(SparkManager.getSessionManager().getJID());
+        final String roomName = userName + "_" + StringUtils.randomString(3);
+
+        String serviceName = getDefaultServiceName();
+        if (ModelUtil.hasLength(serviceName)) {
+            ConferenceUtils.inviteUsersToRoom(serviceName, roomName, jids, true, false);
+        }
+    }
+
     private void startConference(Collection<ContactItem> items) {
         final ContactList contactList = SparkManager.getWorkspace().getContactList();
         List<String> jids = new ArrayList<String>();
@@ -306,7 +337,7 @@ public class ConferenceServices implements InvitationListener {
 
         String serviceName = getDefaultServiceName();
         if (ModelUtil.hasLength(serviceName)) {
-            ConferenceUtils.inviteUsersToRoom(serviceName, roomName, jids, true);
+            ConferenceUtils.inviteUsersToRoom(serviceName, roomName, jids, true, true);
         }
     }
 

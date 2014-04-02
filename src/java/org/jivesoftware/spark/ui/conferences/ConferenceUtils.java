@@ -352,7 +352,8 @@ public class ConferenceUtils {
      * @param roomName    the name of the room.
      * @param jids        a collection of the users to invite.
      */
-    public static void inviteUsersToRoom(String serviceName, String roomName, Collection<String> jids, boolean randomName) {
+    public static void inviteUsersToRoom(String serviceName,
+            String roomName, Collection<String> jids, boolean randomName, boolean now) {
         final LocalPreferences pref = SettingsManager.getLocalPreferences();
         boolean useTextField = pref.isUseAdHocRoom();
         Collection<BookmarkedConference> rooms = null;
@@ -364,8 +365,13 @@ public class ConferenceUtils {
             }
             useTextField = !randomName || (rooms == null || rooms.size() == 0);
         }
-        InvitationDialog inviteDialog = new InvitationDialog(useTextField);
-        inviteDialog.inviteUsersToRoom(serviceName, rooms, roomName, jids);
+        if (now) {
+            InvitationDialog inviteDialog = new InvitationDialog(useTextField);
+            inviteDialog.inviteUsersToRoom(serviceName, rooms, roomName, jids);
+        } else {
+            SchedulerDialog schedulerDialog = new SchedulerDialog(useTextField);
+            schedulerDialog.inviteUsersToRoom(serviceName, rooms, roomName, jids);
+        }
     }
 
     public static Collection<BookmarkedConference> retrieveBookmarkedConferences() throws XMPPException {

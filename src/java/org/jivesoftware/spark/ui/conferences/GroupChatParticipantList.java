@@ -1071,7 +1071,7 @@ public class GroupChatParticipantList extends JPanel {
 	    public void actionPerformed(ActionEvent actionEvent) {
 		ConferenceUtils.inviteUsersToRoom(
 			groupChatRoom.getConferenceService(),
-			groupChatRoom.getRoomname(), null, false);
+			groupChatRoom.getRoomname(), null, false, true);
 	    }
 	};
 

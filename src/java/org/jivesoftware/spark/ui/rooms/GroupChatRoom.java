@@ -181,7 +181,7 @@ public class GroupChatRoom extends ChatRoom {
 
 		    public void actionPerformed(ActionEvent actionEvent) {
 			ConferenceUtils.inviteUsersToRoom(conferenceService,
-				getRoomname(), null, false);
+				getRoomname(), null, false, true);
 		    }
 		};
 
