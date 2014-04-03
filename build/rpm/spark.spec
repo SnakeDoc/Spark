@@ -4,6 +4,7 @@ Version: %{SPARK_VERSION}
 Release: 1
 License: Apache license v2.0
 Group: misc/Spark
+AutoReqProv: no
 Source: %{SPARK_SOURCE}
 Source1: jre-dist.tar.gz
 BuildRoot: %{_tmppath}/build-root-%{name}
@@ -16,6 +17,9 @@ Url: http://www.igniterealtime.org/downloads/source.jsp
 %define homedir %{prefix}/spark
 %define debug_package %{nil}
 
+# override default _rpmfilename
+%define _rpmfilename %%{NAME}-%%{VERSION}.x86.rpm
+
 %description
 Instant Messenger
 
@@ -24,7 +28,7 @@ Instant Messenger
 
 %build
 cd build
-/opt/apache-ant-1.8.1/bin/ant jar
+/opt/apache-ant-1.9.3/bin/ant jar
 cd ..
 
 
