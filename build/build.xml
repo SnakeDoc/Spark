@@ -1013,6 +1013,7 @@
 
 		<copy todir="${release.dir}" >
 			<fileset dir="${target.rpm}/SRPMS" />
+            <fileset dir="${target.rpm}/RPMS" />
 			<fileset dir="${target.rpm}/" >
 				<include name="**/*.rpm"/>
 			</fileset>
