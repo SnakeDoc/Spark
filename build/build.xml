@@ -986,7 +986,7 @@
 	<tstamp>
 		<format property="rpm.builddate" pattern="EEE MMM dd yyyy" locale="en"/>
 	</tstamp>
-	<target name="installer.rpm" depends="dist.src,build.plugins" description="Builds a rpm of spark.">
+	<target name="installer.rpm" depends="init,dist.src,build.plugins" description="Builds a rpm of spark.">
 
 		<mkdir dir="${target.rpm}/SPECS" />
 		<mkdir dir="${target.rpm}/SOURCES" />
