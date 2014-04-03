@@ -18,7 +18,7 @@ Url: http://www.igniterealtime.org/downloads/source.jsp
 %define debug_package %{nil}
 
 # override default _rpmfilename
-%define _rpmfilename %%{NAME}-%%{VERSION}.x86.rpm
+%define _rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.x86.rpm
 
 %description
 Instant Messenger
